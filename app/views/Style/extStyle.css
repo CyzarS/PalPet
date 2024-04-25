@@ -361,6 +361,37 @@ h1, .h1 {
     background-color: rgba(236, 238, 239, 0.3);
 }
 
+.explore {
+    background: #232321;
+  }
+  
+  h1.explore {
+    color: #fff;
+    padding: 10px 0;
+  }
+  
+  .card.explore {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border: none;
+  }
+  
+  .card.explore:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
+  }
+  
+  .card.explore a {
+    color: initial;
+  }
+  
+  .card.explore a:hover {
+    text-decoration: initial;
+  }
+  
+  .card.explore .text-muted i {
+    margin: 0 10px;
+  }
+
 @media (min-width: 992px) {
     .dashboard-app {
         margin-left: 238px;
