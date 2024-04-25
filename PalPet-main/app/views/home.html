@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PalPet</title>
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/f98e4d4157.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="Style/extStyle.css">
+    </head>
+    <body>
+        <header>
+            <div class='dashboard text-center'>
+                <div class="dashboard-nav">
+                    <img src="Images/Logo.png" alt="Company Logo" style="width:120px;" class="brand-logo"> 
+                <nav class="dashboard-nav-list">
+                    <a href="#" id="home" class="dashboard-nav-item active"><i class="fas fa-home"></i> Home</a>
+                    <a href="#" id="matchPet" class="dashboard-nav-item"><i class="fa-solid fa-heart"></i> MatchPet</a>
+                    <a href="#" id="notifications" class="dashboard-nav-item"><i class="fa-solid fa-envelope"></i> Notifications</a>
+                    <a href="#" id="explore" class="dashboard-nav-item"><i class="fa-solid fa-magnifying-glass"></i> Explore</a>
+                    <a href="#" id="create" class="dashboard-nav-item"><i class="fa-solid fa-plus"></i> Create </a>
+                    <div class="nav-item-divider"></div>
+                    <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+                </div>
+                <div class='dashboard-app'>
+                    <header class='dashboard-toolbar'>
+                        <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+                        <div style="float: right; width: 100%;">
+                            <button
+                                class="btn btn-primary my-2 my-sm-0 custom-login-btn"
+                                type="submit"
+                                href="#" data-bs-toggle="modal" data-bs-target="#loginModal" 
+                                style="float: right; padding-right: 10px;"
+                            >
+                            <i class="fa-solid fa-user"></i>      Login
+                            </button>
+                        </div>                        
+                    </header>
+                    
+                        <div class='dashboard-content'></div>
+                </div>
+            </div>
+        </header>
+        
+            
+        <main></main>
+        <footer></footer>
+        
+        <!-- Bootstrap JavaScript Libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="Controllers/sidebar.js"></script>
+        <script>
+            loadJSFile('Controllers/home.js');
+            const mobileScreen = window.matchMedia("(max-width: 990px )");
+            $(document).ready(function () {
+                $(".dashboard-nav-dropdown-toggle").click(function () {
+                    $(this).closest(".dashboard-nav-dropdown")
+                        .toggleClass("show")
+                        .find(".dashboard-nav-dropdown")
+                        .removeClass("show");
+                    $(this).parent()
+                        .siblings()
+                        .removeClass("show");
+                });
+                $(".menu-toggle").click(function () {
+                    if (mobileScreen.matches) {
+                        $(".dashboard-nav").toggleClass("mobile-show");
+                    } else {
+                        $(".dashboard").toggleClass("dashboard-compact");
+                    }
+                });
+            });
+            // Selecciona todos los elementos de la barra de navegación
+            var navItems = document.querySelectorAll('.dashboard-nav-item');
+            debugger;
+            // Agrega un evento de clic a cada elemento
+            navItems.forEach(function(item) {
+
+                item.addEventListener('click', function(e) {
+                    // Evita el comportamiento predeterminado del enlace
+                    e.preventDefault();
+
+                    // Elimina la clase 'active' de todos los elementos
+                    navItems.forEach(function(item) {
+                        item.classList.remove('active');
+                    });
+
+                    // Agrega la clase 'active' al elemento que se ha hecho clic
+                    this.classList.add('active');
+                });
+            });
+        </script>
+
+                <!-- Login -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel" style="padding-right: 5px;">Login</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="loginForm" onsubmit="handleLogin(event)">
+                            <div class="bg-white p-5 rounded-5 text-dark">
+                                <div class="d-flex justify-content-center">
+                                    <img src="Images/user.png" alt="login-icon" style="height: 7rem;">
+                                </div>
+                                <div class="text-center fs-1 fw-bold">Login</div>
+                                <div class="input-group mt-4">
+                                    <div class="input-group-text">
+                                        <img src="Images/arroba.png" alt="username-icon" style="height: 1rem;">
+                                    </div>
+                                    <input class="form-control" type="email" placeholder="Email" required>
+                                </div>
+                                <div class="input-group mt-1">
+                                    <div class="input-group-text">
+                                        <img src="Images/lock.png" alt="password-icon" style="height: 1rem;">
+                                    </div>
+                                    <input class="form-control" type="password" placeholder="Password" required>
+                                </div>
+                                <div class="d-flex justify-content-around mt-1">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <input class="form-check-input" type="checkbox">
+                                        <div class="pt-1" style="font-size: 0.9rem;">Remember me</div>
+                                    </div>
+                                    <div class="pt-1">
+                                        <a class="text-decoration-none fw-semibold fst-italic" style="font-size: 0.9rem;"
+                                            href="#">Forgot your password?</a>
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-sm">Login</button>
+                                <div class="p-3">
+                                    <div class="border-bottom text-center" style="height: 0.9rem;">
+                                        <span class="bg-light px-3">or</span>
+                                    </div>
+                                </div>
+                                <div class="btn d-flex gap-2 justify-content-center border mt-3 shadow">
+                                    <img src="Images/search.png" alt="google-icon" style="height: 1.6rem;">
+                                    <div class="fw-semibold text-dark">Continue with Google</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <p class="text-center">Don't have an account? <a href="#" data-bs-toggle="modal"
+                                data-bs-target="#signupModal">Sign up here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Sign Up -->
+        <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5> <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signupForm">
+                            <div class="bg-white p-5 rounded-5 text-dark">
+                                <div class="d-flex justify-content-center"> <img src="Images/user.png"
+                                        alt="signup-icon" style="height: 7rem;"> </div>
+                                <div class="text-center fs-1 fw-bold">Sign Up</div>
+                                <div class="input-group mt-4">
+                                    <div class="input-group-text"> <img src="Images/id-card.png" alt="firstname-icon"
+                                            style="height: 1rem;"> </div> <input type="text" class="form-control"
+                                        placeholder="First Name" id="signupFirstName" required>
+                                </div>
+                                <div class="input-group mt-1">
+                                    <div class="input-group-text"> <img src="Images/id-card.png" alt="lastname-icon"
+                                            style="height: 1rem;"> </div> <input type="text" class="form-control"
+                                        placeholder="Last Name" id="signupLastName" required>
+                                </div>
+                                <div class="input-group mt-1">
+                                    <div class="input-group-text"> <img src="Images/arroba.png" alt="email-icon"
+                                            style="height: 1rem;"> </div> <input type="email" class="form-control"
+                                        placeholder="Email" id="signupEmail" required>
+                                </div>
+                                <div class="input-group mt-1">
+                                    <div class="input-group-text"> <img src="Images/age-group.png" alt="age-icon"
+                                            style="height: 1rem;"> </div> <input type="number" class="form-control"
+                                        placeholder="Age" id="age" required>
+                                </div>
+                                <div class="input-group mt-1">
+                                    <div class="input-group-text"> <img src="Images/telephone.png" alt="phoneicon"
+                                            style="height: 1rem;"> </div> <input type="tel" class="form-control"
+                                        placeholder="Phone" id="phone" required>
+                                </div>
+                                <div class="input-group mt-1">
+                                    <div class="input-group-text"> <img src="Images/lock.png" alt="password-icon"
+                                            style="height: 1rem;"> </div> <input type="password" class="form-control"
+                                        placeholder="Password" id="signupPassword" required>
+                                </div>
+                                <div class="input-group mt-1">
+                                    <div class="input-group-text"> <img src="Images/lock.png" alt="confirmpassword-icon"
+                                            style="height: 1rem;"> </div> <input type="password" class="form-control"
+                                        placeholder="Confirm Password" id="confirmPassword" required>
+                                </div> <button type="submit"
+                                    class="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-sm">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <p class="text-center">Already have an account? <a href="#" data-bs-toggle="modal"
+                                data-bs-target="#loginModal">Log in here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
