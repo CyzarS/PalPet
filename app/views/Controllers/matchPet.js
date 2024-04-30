@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function() {
+    loadHomeContent();
+});
+
 function loadHomeContent() {
     var dashboardContent = document.querySelector('.dashboard-content');
 
