@@ -6,26 +6,29 @@ const { validatePetAttributes } = require('../middlewares/pet-validation');
 
 router.get('/', authMiddleware.validateHeader, authMiddleware.validateAdmin, async (req, res) => {
   try {
-    let filteredPets = await Product.find();
+    let filteredPets = await Pet.find();
     // Filtrar por atributos
     const { query } = req;
     Object.keys(query).forEach((key) => {
-      let value = query[key].toLowerCase();
-      filteredPets = filteredPets.filter((product) =>
-          product[key] && product[key].toLowerCase().includes(value)
-      );
+      if (key !== 'available') {
+        // Filtrar por otros atributos (excepto available)
+        let value = query[key].toLowerCase();
+        filteredPets = filteredPets.filter((pet) =>
+          pet[key] && pet[key].toLowerCase().includes(value)
+        );
+      }
     });
 
-    // Ocultar el atributo 'stock' para usuarios no administradores
-    let productsToReturn = filteredPets.map((product) => {
+    // Ocultar el atributo 'available' para usuarios no administradores
+    let petsToReturn = filteredPets.map((pet) => {
       if (!req.admin) {
-        let { stock, ...rest } = product.toObject(); // Convertir a objeto para eliminar el atributo virtual '_id'
+        let { available, ...rest } = pet.toObject(); // Convertir a objeto para eliminar el atributo virtual '_id'
         return rest;
       }
-      return product;
+      return pet;
     });
 
-    res.json(productsToReturn);
+    res.json(petsToReturn);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -34,19 +37,19 @@ router.get('/', authMiddleware.validateHeader, authMiddleware.validateAdmin, asy
 
 router.get('/:id', authMiddleware.validateHeader, authMiddleware.validateAdmin, async (req, res) => {
   try {
-    let productId = req.params.id;
-    let product = await Product.findById(productId);
+    let petId = req.params.id;
+    let pet = await Pet.findById(petId);
 
-    if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+    if (!pet) {
+      return res.status(404).json({ error: 'pet not found' });
     }
 
     if (!req.admin) {
-      let { stock, ...rest } = product.toObject(); // Convertir a objeto para eliminar el atributo virtual '_id'
+      let { available, ...rest } = pet.toObject(); // Convertir a objeto para eliminar el atributo virtual '_id'
       return res.json(rest);
     }
 
-    res.json(product);
+    res.json(pet);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -55,22 +58,22 @@ router.get('/:id', authMiddleware.validateHeader, authMiddleware.validateAdmin, 
 
 router.post('/', authMiddleware.validateHeader, authMiddleware.requiredAdmin, async (req, res) => {
   try {
-    let newProductData = req.body;
+    let newPetData = req.body;
 
-    let validationResult = validatePetAttributes(newProductData);
+    let validationResult = validatePetAttributes(newPetData);
     if (!validationResult.isValid) {
       return res.status(400).json({ error: 'Missing or invalid attributes', missingAttributes: validationResult.missingAttributes });
     }
 
-    let existingProduct = await Product.findOne({ name: newProductData.name });
-    if (existingProduct) {
-      return res.status(400).json({ error: 'Product with the same name already exists' });
+    let existingPet = await Pet.findOne({ name: newPetData.name });
+    if (existingPet) {
+      return res.status(400).json({ error: 'Pet with the same name already exists' });
     }
 
-    let newProduct = new Product(newProductData);
-    await newProduct.save();
+    let newPet = new Pet(newPetData);
+    await newPet.save();
 
-    res.status(201).json({ message: `Product '${newProduct.name}' created successfully` });
+    res.status(201).json({ message: `Pet '${newPet.name}' created successfully` });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -79,25 +82,25 @@ router.post('/', authMiddleware.validateHeader, authMiddleware.requiredAdmin, as
 
 router.put('/:id', authMiddleware.validateHeader, authMiddleware.requiredAdmin, async (req, res) => {
   try {
-    let productId = req.params.id;
-    let updatedProductData = req.body;
+    let petId = req.params.id;
+    let updatedPetData = req.body;
 
-    let validationResult = validatePetAttributes(updatedProductData);
+    let validationResult = validatePetAttributes(updatedPetData);
     if (!validationResult.isValid) {
       return res.status(400).json({ error: 'Missing or invalid attributes', missingAttributes: validationResult.missingAttributes });
     }
 
-    let existingProduct = await Product.findOne({ name: updatedProductData.name, _id: { $ne: productId } });
-    if (existingProduct) {
-      return res.status(400).json({ error: 'Another product with the same name already exists' });
+    let existingPet = await Pet.findOne({ name: updatedPetData.name, _id: { $ne: petId } });
+    if (existingPet) {
+      return res.status(400).json({ error: 'Another pet with the same name already exists' });
     }
 
-    let updatedProduct = await Product.findByIdAndUpdate(productId, updatedProductData, { new: true });
-    if (!updatedProduct) {
-      return res.status(404).json({ error: 'Product not found' });
+    let updatedPet = await Pet.findByIdAndUpdate(petId, updatedPetData, { new: true });
+    if (!updatedPet) {
+      return res.status(404).json({ error: 'Pet not found' });
     }
 
-    res.status(200).json({ message: `Product '${updatedProduct.name}' updated successfully` });
+    res.status(200).json({ message: `Pet '${updatedPet.name}' updated successfully` });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -106,14 +109,14 @@ router.put('/:id', authMiddleware.validateHeader, authMiddleware.requiredAdmin, 
 
 router.delete('/:id', authMiddleware.validateHeader, authMiddleware.requiredAdmin, async (req, res) => {
   try {
-    let productId = req.params.id;
+    let petId = req.params.id;
 
-    let deletedProduct = await Product.findByIdAndDelete(productId);
-    if (!deletedProduct) {
-      return res.status(404).json({ error: 'Product not found' });
+    let deletedPet = await Pet.findByIdAndDelete(petId);
+    if (!deletedPet) {
+      return res.status(404).json({ error: 'Pet not found' });
     }
 
-    res.status(200).json({ message: `Product '${deletedProduct.name}' deleted successfully` });
+    res.status(200).json({ message: `Pet '${deletedPet.name}' deleted successfully` });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

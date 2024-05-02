@@ -14,7 +14,7 @@ const petSchema = mongoose.Schema({
         required: true
     },
     edad: {
-        type: Number,
+        type: String,
         required: true
     },
     descripcion: {
@@ -23,6 +23,10 @@ const petSchema = mongoose.Schema({
     },
     imagenUrl: {
         type: String,
+        required: true
+    },
+    available: {
+        type: Number,
         required: true
     }
 });
@@ -49,9 +53,10 @@ async function createAndSave() {
         "nombre": "Lola",
         "especie": "perro",
         "raza": "Labrador",
-        "edad": 1,
+        "edad": "1",
         "descripcion": "golden",
-        "imageUrl": "http://www.imagenLola.com/images/"
+        "imageUrl": "http://www.imagenLola.com/images/",
+        "available":  1
     });
     Pet.findPets();
 }

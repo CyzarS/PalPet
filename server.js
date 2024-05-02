@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
-const productRoutes = require('./routes/product-route');
-const cartRoutes = require('./routes/likes-route');
+const petRoutes = require('./routes/pet-route');
+const likeRoutes = require('./routes/like-route');
 const userRoutes = require('./routes/user-route')
 const port = 3101;
 const app = express();
@@ -28,9 +28,9 @@ app.get('/', (req, res) => {
   res.send('Integrated Assignment 3. e-commerce app');
 });
 
-app.use('/api/products', productRoutes);
+app.use('/api/products', petRoutes);
 
-app.use('/api/cart', cartRoutes);
+app.use('/api/cart', likeRoutes);
 
 app.use('/api/users', userRoutes);
 

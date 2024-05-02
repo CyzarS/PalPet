@@ -27,8 +27,8 @@ router.post('/', authMiddleware.validateHeader, authMiddleware.validateUser, asy
                 return res.status(400).json({ error: 'Quantity must be greater than 0.' });
             }
 
-            if (item.quantity > pet.stock) {
-                return res.status(400).json({ error: `Insufficient stock for pet with ID ${item.petId}.` });
+            if (item.quantity > pet.available) {
+                return res.status(400).json({ error: `Insufficient available for pet with ID ${item.petId}.` });
             }
         }
 
@@ -57,9 +57,9 @@ router.put('/update', authMiddleware.validateHeader, authMiddleware.validateUser
             return res.status(404).json({ error: `Pet with ID ${petId} not found.` });
         }
 
-        // Verificar si hay suficiente stock disponible
-        if (quantity > pet.stock) {
-            return res.status(400).json({ error: `Insufficient stock for pet with ID ${petId}.` });
+        // Verificar si hay suficiente available disponible
+        if (quantity > pet.available) {
+            return res.status(400).json({ error: `Insufficient available for pet with ID ${petId}.` });
         }
 
         // Actualizar la cantidad de la mascota en el carrito
