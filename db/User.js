@@ -1,4 +1,5 @@
 const { mongoose } = require("./connectdb");
+const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema({
     name: {
@@ -13,6 +14,10 @@ const userSchema = mongoose.Schema({
     password: {
         type: 'string',
         required: true
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -27,6 +32,18 @@ userSchema.statics.saveUser = async (userData) => {
     let newUser = User(userData);
     return await newUser.save();
 }
+
+// Método para autenticar al usuario
+userSchema.statics.authUser = async function(email, password) {
+    const user = await this.findOne({ email });
+    if (user) {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
+            return user;
+        }
+    }
+    return null;
+};
 
 let User = mongoose.model('User', userSchema);
 

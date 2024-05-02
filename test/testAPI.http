@@ -1,5 +1,30 @@
 ### ----------GET PRODUCTS------------
 
+### Iniciar sesion
+POST http://localhost:3101/api/auth/login
+Content-Type: application/json
+
+{
+"email": "luci123@gmail.com",
+"password": "luci123"
+}
+
+###
+POST http://localhost:3101/api/cart/add
+Content-Type: application/json
+
+{
+  "productId": "6630247554b46e1e465185a8",
+  "quantity": 5
+}
+
+###
+DELETE http://localhost:3101/api/cart/remove/6630247554b46e1e465185a8
+
+###
+GET http://localhost:3101/api/cart
+
+
 ### ALL PRODUCTS FOR NON-ADMIN
 POST http://localhost:3101/users/register
 Content-Type: application/json
@@ -11,8 +36,10 @@ Content-Type: application/json
 }
 
 ### RETURN ALL PRODUCT ATTRIBUTES (ALSO STOCK)
-GET http://localhost:3101/products
+GET http://localhost:3101/api/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2kxMjNAZ21haWwuY29tIiwiX2lkIjoiNjYzMDJiOWM3OGYzM2QwNThmNmNhNTQyIiwiaWF0IjoxNzE0NDkxMDk2LCJleHAiOjE3MTQ0OTQ2OTZ9.fYDv53UT5wyhhSeLtLhLJMSc6diSiyjQIf6W0RjbZUM
 x-auth: 23423
+
 
 ### FILTER BY NAME AND CATEGORY FOR NON-ADMIN
 GET http://localhost:3101/products?name=Mesa&category=Mesas
@@ -47,18 +74,18 @@ x-auth: 23423
 ### ----------POST PRODUCTS------------
 
 ### ADD A PRODUCT OK (ADMIN)
-POST http://localhost:3101/products
+POST http://localhost:3101/api/products
 Content-Type: application/json
 x-auth: 23423
 
 {
-    "name": "Librero",
-    "description": "Estanteria para guardar libros",
-    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711162707/MueblesVilla/Productos/Almacenamiento/njajp1gtyv3d33dh04rt.webp",
-    "unit": "unidad",
-    "stock": 10,
-    "pricePerUnit": 249.99,
-    "category": "Almacenamiento"
+        "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711052831/MueblesVilla/Productos/Sofas/p9t7stygxmwtkofyvuje.png",
+        "name": "Sofá modular",
+        "description": "Sofá modular de 3 plazas con tapizado de tela.",
+        "unit": "unidad",
+        "category": "Sofás",
+        "pricePerUnit": 899.99,
+        "stock": 5
 }
 
 ### ADD A PRODUCT (MISSING PROPERTIES)

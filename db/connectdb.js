@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const config = require("./config");
 
-console.log(config.getUrl());
-
 mongoose.connect(config.getUrl(), {
     // userNewUrlParser: true
 })
