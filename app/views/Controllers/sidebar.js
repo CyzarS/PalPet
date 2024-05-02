@@ -3,7 +3,6 @@ var matchPet = document.getElementById('matchPet');
 var explore = document.getElementById('explore');
 var notifications = document.getElementById('notifications');
 var create = document.getElementById('create');
-var btn_home = document.getElementById('btn_home');
 
 home.addEventListener('click', function() {
     loadJSFile('Controllers/home.js');

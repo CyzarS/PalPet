@@ -8,8 +8,20 @@ function loadHomeContent() {
 
     
     dashboardContent.innerHTML =
-    '<img src="Images/home.png" alt="Home" style="width: 100%;" />' +
-    '<button id="btn_home" style="position: absolute; bottom: 15%; right: 15%; background-color: #2B3499; color: white; border-radius: 200px; padding: 10px 20px; border: none; font-size: 2vw;">Click here to try!</button>';                         
+    '<img id="img_home" src="Images/home.png" alt="Home" style="width: 100%;" />'
+
+    var img_home = document.getElementById('img_home');
+
+    img_home.addEventListener('click', function() {
+        loadJSFile('Controllers/matchPet.js');
+    });
+
+    function loadJSFile(filename) {
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type", "text/javascript");
+        fileref.setAttribute("src", filename);
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+    }
 }
 
 loadHomeContent();

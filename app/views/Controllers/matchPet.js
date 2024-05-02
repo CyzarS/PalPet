@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
 function loadHomeContent() {
     var dashboardContent = document.querySelector('.dashboard-content');
 
-    var homeNavItem = document.getElementById('matchPet');
+    /*var homeNavItem = document.getElementById('matchPet');
     if (!homeNavItem.classList.contains('active')) {
         return;
-    } 
+    } */
 
     dashboardContent.innerHTML = `
-        <div class="tinder">
+        <div class="tinder text-center">
             <div class="tinder--status">
                 <i class="fa fa-remove"></i>
                 <i class="fa fa-heart"></i>
