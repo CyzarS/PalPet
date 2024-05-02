@@ -1,0 +1,319 @@
+### ----------GET PRODUCTS------------
+
+### ALL PRODUCTS FOR NON-ADMIN
+POST http://localhost:3101/users/register
+Content-Type: application/json
+
+{
+    "name" : "Ricardo Alone",
+    "email" : "ricardo@gmail.com",
+    "password" : "arcane"
+}
+
+### RETURN ALL PRODUCT ATTRIBUTES (ALSO STOCK)
+GET http://localhost:3101/products
+x-auth: 23423
+
+### FILTER BY NAME AND CATEGORY FOR NON-ADMIN
+GET http://localhost:3101/products?name=Mesa&category=Mesas
+x-auth: 12345
+
+### FILTER BY PRICE RANGE FOR NON-ADMIN
+GET http://localhost:3101/products?min=100&max=400
+x-auth: 12345
+
+### FILTER BY NAME
+GET http://localhost:3101/products?name=cama
+x-auth: 12345
+
+### ----------GET PRODUCTS BY ID------------
+
+### GET PRODUCT BY ID (VALID ID AND NON-ADMIN)
+GET http://localhost:3101/products/abcf
+x-auth: 12345
+
+### GET PRODUCT BY ID (VALID ID) (ADMIN)
+GET http://localhost:3101/products/abcg
+x-auth: 23423
+
+### GET PRODUCT BY ID (INVALID ID)(USER)
+GET http://localhost:3101/products/invalid-id
+x-auth: 12345
+
+### GET PRODUCT BY ID (INVALID ID)(ADMIN)
+GET http://localhost:3101/products/invalid-id
+x-auth: 23423
+
+### ----------POST PRODUCTS------------
+
+### ADD A PRODUCT OK (ADMIN)
+POST http://localhost:3101/products
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "name": "Librero",
+    "description": "Estanteria para guardar libros",
+    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711162707/MueblesVilla/Productos/Almacenamiento/njajp1gtyv3d33dh04rt.webp",
+    "unit": "unidad",
+    "stock": 10,
+    "pricePerUnit": 249.99,
+    "category": "Almacenamiento"
+}
+
+### ADD A PRODUCT (MISSING PROPERTIES)
+POST http://localhost:3101/products
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "imageUrl": "https://www.officedepot.com.mx/medias/100175617.jpg-515ftw?context=bWFzdGVyfHJvb3R8Mzc3OTF8aW1hZ2UvanBlZ3xhRE14TDJobE1TOHhNakV5TVRrNE1qVXdNRGc1TkM4eE1EQXhOelUyTVRjdWFuQm5YelV4TldaMGR3fDMyMGE1N2YwNmJhYWY4NWM3YWZlOTA2Nzc4MmI5YmQxZTlkNDNhYzg2Y2VkODQ0ZDQwOGZiZTg4YWE5OTRmYTE",
+    "name": "Escritorio"
+}
+
+### ADD A PRODUCT (ADMIN) (REPEATED NAME)
+POST http://localhost:3101/products
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "name": "Librero",
+    "description": "Estanteria para guardar libros",
+    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711162707/MueblesVilla/Productos/Almacenamiento/njajp1gtyv3d33dh04rt.webp",
+    "unit": "unidad",
+    "stock": 10,
+    "pricePerUnit": 249.99,
+    "category": "Almacenamiento"
+}
+
+### ADD A PRODUCT (MISSING X-TOKEN)
+POST http://localhost:3101/products
+Content-Type: application/json
+
+{
+    "name": "Silla",
+    "description": "Silla para escritorio",
+    "imageUrl": "https://static.grainger.com/rp/s/is/image/Grainger/13E941_AS01?$glgmain$",
+    "unit": "unidad",
+    "stock": 5,
+    "pricePerUnit": 299.99,
+    "category": "Sillas"
+}
+
+### ADD A PRODUCT (X-TOKEN NOT ADMIN)
+POST http://localhost:3101/products
+Content-Type: application/json
+x-auth: 12345
+
+{
+    "name": "Silla",
+    "description": "Silla para escritorio",
+    "imageUrl": "https://static.grainger.com/rp/s/is/image/Grainger/13E941_AS01?$glgmain$",
+    "unit": "unidad",
+    "stock": 5,
+    "pricePerUnit": 299.99,
+    "category": "Sillas"
+}
+
+### ----------PUT PRODUCTS------------
+
+### UPDATE PRODUCT OK (ADMIN)
+PUT http://localhost:3101/products/su03lDNr3BtkEAQjFAM1c
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "name": "Mesa de noche",
+    "description": "Mesa para el dormitorio",
+    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711163076/MueblesVilla/Productos/Mesas/wqrx8cjlmt8o3pwuwxzx.webp",
+    "unit": "unidad",
+    "stock": 15,
+    "pricePerUnit": 299.99,
+    "category": "Mesas"
+}
+
+### UPDATE PRODUCT (MISSING PROPERTIES)
+PUT http://localhost:3101/products/abcd
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "name": "Sofa entero",
+    "description": "Sofa para la sala de estar"
+}
+
+### UPDATE PRODUCT (ADMIN) (REPEATED NAME)
+PUT http://localhost:3101/products/su03lDNr3BtkEAQjFAM1c
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "name": "Mesa de noche",
+    "description": "Mesa para el dormitorio",
+    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711163076/MueblesVilla/Productos/Mesas/wqrx8cjlmt8o3pwuwxzx.webp",
+    "unit": "unidad",
+    "stock": 15,
+    "pricePerUnit": 299.99,
+    "category": "Mesas"
+}
+
+### UPDATE PRODUCT (MISSING X-TOKEN)
+PUT http://localhost:3101/products/abcd
+Content-Type: application/json
+
+{
+    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711052886/MueblesVilla/Productos/Mesas/w0psoscmq0rhajg3xjnm.png",
+    "name": "Mesa de comedor",
+    "description": "Mesa de comedor rectangular de madera maciza.",
+    "unit": "unidad",
+    "category": "Mesas",
+    "pricePerUnit": 700
+  }
+
+### UPDATE PRODUCT (X-TOKEN NOT ADMIN)
+PUT http://localhost:3101/products/abcd
+Content-Type: application/json
+x-auth: 12345
+
+{
+    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711052886/MueblesVilla/Productos/Mesas/w0psoscmq0rhajg3xjnm.png",
+    "name": "Mesa de comedor",
+    "description": "Mesa de comedor rectangular de madera maciza.",
+    "unit": "unidad",
+    "category": "Mesas",
+    "pricePerUnit": 700
+  }
+
+### ----------DELETE PRODUCTS------------
+
+### DELETE PRODUCT OK (ADMIN)
+DELETE http://localhost:3101/products/abch
+x-auth: 23423
+
+### DELETE PRODUCT (MISSING X-TOKEN)
+DELETE http://localhost:3101/products/abcd
+
+### DELETE PRODUCT (X-TOKEN NOT ADMIN)
+DELETE http://localhost:3101/products/abcd
+x-auth: 12345
+
+### ----------POST CART------------
+
+### ADD TO CART (VALID)
+POST http://localhost:3101/cart
+Content-Type: application/json
+
+[
+    {
+        "productId": "662443265b17af101802dfbf",
+        "quantity": 3
+    }
+]
+
+### ADD TO CART (MISSING X-USER)
+POST http://localhost:3101/cart
+Content-Type: application/json
+x-auth: 12345
+
+[
+    {
+        "productId": "abcf",
+        "quantity": 3
+    },
+    {
+        "productId": "abcg",
+        "quantity": 2
+    }
+]
+
+### ADD TO CART (EXISTENT USER)
+POST http://localhost:3101/cart
+Content-Type: application/json
+x-auth: 12345
+x-user: Ricardo
+
+[
+    {
+        "productId": "abcd",
+        "quantity": 1
+    },
+    {
+        "productId": "abce",
+        "quantity": 1
+    }
+]
+
+### ADD TO CART (INVALID AMOUNT)
+POST http://localhost:3101/cart
+Content-Type: application/json
+x-auth: 12345
+x-user: Sergio
+
+[
+    {
+        "productId": "abcd",
+        "quantity": 0
+    },
+    {
+        "productId": "abce",
+        "quantity": -1
+    }
+]
+
+### ADD TO CART (INSUFFICIENT STOCK)
+POST http://localhost:3101/cart
+Content-Type: application/json
+x-auth: 12345
+x-user: Sergio
+
+[
+    {
+        "productId": "abcd",
+        "quantity": 2
+    },
+    {
+        "productId": "abce",
+        "quantity": 4
+    }
+]
+
+### ----------GET CART------------
+
+### GET CART (VALID)
+GET http://localhost:3101/cart
+x-auth: 12345
+x-user: Ricardo
+
+### GET CART WITH INSUFFICIENT STOCK
+### MODIFY STOCK OF PRODUCT
+PUT http://localhost:3101/products/abcd
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "stock": 1
+}
+
+### GET CART
+GET http://localhost:3101/cart
+x-auth: 12345
+x-user: Ricardo
+
+### GET CART WITH 0 STOCK
+### MODIFY STOCK OF PRODUCT
+PUT http://localhost:3101/products/abcd
+Content-Type: application/json
+x-auth: 23423
+
+{
+    "stock": 0
+}
+
+### GET CART
+GET http://localhost:3101/cart
+x-auth: 12345
+x-user: Chenko
+
+### GET CART (MISSING X-USER)
+GET http://localhost:3101/cart
+x-auth: 12345
