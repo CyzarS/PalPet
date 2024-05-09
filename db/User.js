@@ -17,8 +17,26 @@ const userSchema = mongoose.Schema({
     },
     isAdmin: {
         type: Boolean,
-        default: false
+        default: true
+    },
+    profileImage: {
+        type: String,
+        default: 'https://static.vecteezy.com/system/resources/previews/005/005/788/original/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg'
+    },
+    phone: {
+        type: String,
+        default: '+52:'
+    },
+    location: {
+        type: String,
+        default: ''
+    },
+    create: {
+        type: [String], // Definir como un arreglo de strings
+        default: [],
+        required: true
     }
+
 })
 
 userSchema.statics.findUsers = async (filter = {}, isAdmin = false) => {

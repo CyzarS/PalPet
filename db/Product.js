@@ -5,7 +5,15 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
+    species: {
+        type: String,
+        required: true
+    },
+    breed: {
+        type: String,
+        required: true
+    },
+    age: {
         type: String,
         required: true
     },
@@ -13,19 +21,15 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    unit: {
+    stock: {
+        type: Number,
+        default: 1
+    },
+    description: {
         type: String,
         required: true
     },
-    stock: {
-        type: Number,
-        required: true
-    },
-    pricePerUnit: {
-        type: Number,
-        required: true
-    },
-    category: {
+    userId:{
         type: String,
         required: true
     }
@@ -56,13 +60,13 @@ let Product = mongoose.model('Product', productSchema);
 
 async function createAndSave() {
     let doc = await Product.saveProduct({
-        "name": "Librero",
-        "description": "Estanteria para guardar libros",
-        "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711162707/MueblesVilla/Productos/Almacenamiento/njajp1gtyv3d33dh04rt.webp",
-        "unit": "unidad",
-        "stock": 10,
-        "pricePerUnit": 249.99,
-        "category": "Almacenamiento"
+        "name": "Lola",
+        "specie": "dog",
+        "race": "Chihuahua",
+        "age": "1",
+        "description": "black",
+        "imageUrl": "Images/mascota.jpg",
+        "stock": "1"
     });
     Product.findProducts();
 }

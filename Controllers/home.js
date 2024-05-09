@@ -3,17 +3,16 @@ function loadHomeContent() {
     
     var homeNavItem = document.getElementById('home');
     if (!homeNavItem.classList.contains('active')) {
-        return;
+        return; 
     }
 
-    
     dashboardContent.innerHTML =
-    '<img id="img_home" src="Images/home.png" alt="Home" style="width: 100%;" />'
+    '<img id="img_match" src="Images/ExploreHome.png" alt="Home" style="width: 100%;" />'
 
-    var img_home = document.getElementById('img_home');
+    var img_match = document.getElementById('img_match');
 
-    img_home.addEventListener('click', function() {
-        loadJSFile('Controllers/matchPet.js');
+    img_match.addEventListener('click', function() {
+        loadJSFile('Controllers/explore.js');
     });
 
     function loadJSFile(filename) {

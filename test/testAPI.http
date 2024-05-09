@@ -1,346 +1,170 @@
-### ----------GET PRODUCTS------------
+@host = http://localhost:3101
 
-### Iniciar sesion
-POST http://localhost:3101/api/auth/login
+### Registro de usuario(admin)
+POST {{host}}/api/users/register
 Content-Type: application/json
 
 {
-"email": "luci123@gmail.com",
-"password": "luci123"
+    "name": "Ana Cristina Villalobos Romero",
+    "email": "ana123@gmail.com",
+    "password": "ana123",
+    "isAdmin": true
 }
 
-###
-POST http://localhost:3101/api/cart/add
+### Login with cookies
+POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-  "productId": "6630247554b46e1e465185a8",
-  "quantity": 5
+    "email": "feliza@gmail.com",
+    "password": "hola"
 }
 
-###
-DELETE http://localhost:3101/api/cart/remove/6630247554b46e1e465185a8
+###  get users
+GET {{host}}/api/users/
 
-###
-GET http://localhost:3101/api/cart
+###  get users
+GET {{host}}/api/Users/
 
 
-### ALL PRODUCTS FOR NON-ADMIN
-POST http://localhost:3101/users/register
+### Login with cookies
+POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-    "name" : "Ricardo Alone",
-    "email" : "ricardo@gmail.com",
-    "password" : "arcane"
+    "email": "aura@mail.com",
+    "password": "hola"
 }
 
-### RETURN ALL PRODUCT ATTRIBUTES (ALSO STOCK)
-GET http://localhost:3101/api/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2kxMjNAZ21haWwuY29tIiwiX2lkIjoiNjYzMDJiOWM3OGYzM2QwNThmNmNhNTQyIiwiaWF0IjoxNzE0NDkxMDk2LCJleHAiOjE3MTQ0OTQ2OTZ9.fYDv53UT5wyhhSeLtLhLJMSc6diSiyjQIf6W0RjbZUM
-x-auth: 23423
 
-
-### FILTER BY NAME AND CATEGORY FOR NON-ADMIN
-GET http://localhost:3101/products?name=Mesa&category=Mesas
-x-auth: 12345
-
-### FILTER BY PRICE RANGE FOR NON-ADMIN
-GET http://localhost:3101/products?min=100&max=400
-x-auth: 12345
-
-### FILTER BY NAME
-GET http://localhost:3101/products?name=cama
-x-auth: 12345
-
-### ----------GET PRODUCTS BY ID------------
-
-### GET PRODUCT BY ID (VALID ID AND NON-ADMIN)
-GET http://localhost:3101/products/abcf
-x-auth: 12345
-
-### GET PRODUCT BY ID (VALID ID) (ADMIN)
-GET http://localhost:3101/products/abcg
-x-auth: 23423
-
-### GET PRODUCT BY ID (INVALID ID)(USER)
-GET http://localhost:3101/products/invalid-id
-x-auth: 12345
-
-### GET PRODUCT BY ID (INVALID ID)(ADMIN)
-GET http://localhost:3101/products/invalid-id
-x-auth: 23423
-
-### ----------POST PRODUCTS------------
-
-### ADD A PRODUCT OK (ADMIN)
-POST http://localhost:3101/api/products
+### Add product as admin
+POST {{host}}/api/products
 Content-Type: application/json
-x-auth: 23423
 
 {
-        "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711052831/MueblesVilla/Productos/Sofas/p9t7stygxmwtkofyvuje.png",
-        "name": "Sofá modular",
-        "description": "Sofá modular de 3 plazas con tapizado de tela.",
+        "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1713066960/MueblesVilla/Productos/Cocina/s4n9wrwsco1z8htattkd.webp",
+        "name": "Juego de vajilla",
+        "description": "Juego de vajilla de cerámica para 6 personas, incluye platos, tazas y cuencos.",
         "unit": "unidad",
-        "category": "Sofás",
-        "pricePerUnit": 899.99,
-        "stock": 5
+        "category": "Cocina",
+        "pricePerUnit": 159.99,
+        "stock": 12
 }
 
-### ADD A PRODUCT (MISSING PROPERTIES)
-POST http://localhost:3101/products
+### Ver los productos con stock(admin)
+GET {{host}}/api/products
+
+### Productos por id stock(admin)
+GET {{host}}/api/products/6630247554b46e1e465185a8
+
+### Productos por precio minimo
+GET {{host}}/api/products?min=400
+
+### Productos por precio maximo
+GET {{host}}/api/products?max=400
+
+### Productos en un rango de precio
+GET {{host}}/api/products?min=100&max=200
+
+### Productos por nombre
+GET {{host}}/api/products?name=mesa
+
+### Poductos por descripcion
+GET {{host}}/api/products?description=madera
+
+### Productos por categoria
+GET {{host}}/api/products?species=Cat
+
+### Filtros combinados
+GET {{host}}/api/products?max=200&category=almacenamiento
+
+### Editar un producto como admin
+PUT {{host}}/api/products/6630247554b46e1e465185a8
 Content-Type: application/json
-x-auth: 23423
 
 {
-    "imageUrl": "https://www.officedepot.com.mx/medias/100175617.jpg-515ftw?context=bWFzdGVyfHJvb3R8Mzc3OTF8aW1hZ2UvanBlZ3xhRE14TDJobE1TOHhNakV5TVRrNE1qVXdNRGc1TkM4eE1EQXhOelUyTVRjdWFuQm5YelV4TldaMGR3fDMyMGE1N2YwNmJhYWY4NWM3YWZlOTA2Nzc4MmI5YmQxZTlkNDNhYzg2Y2VkODQ0ZDQwOGZiZTg4YWE5OTRmYTE",
-    "name": "Escritorio"
+    "stock": 19
+} 
+
+### Borrar un producto (only admin)
+DELETE {{host}}/api/products/66357e07585beb59323f437a
+
+### Ver todos los usuarios (only admin) ............................
+GET {{host}}/api/users/
+
+### Ver el carrito de un usuario (only admin)
+GET {{host}}/api/cart/user/663a8e82c4223a5212483606
+
+### Logout
+GET {{host}}/api/auth/logout
+
+
+### Registro de usuario
+POST {{host}}/api/users/register
+Content-Type: application/json
+
+{
+    "name": "Jorge Adrian Euan Izquierdo",
+    "email": "jorge1234@gmail.com",
+    "password": "jorge1234"
 }
 
-### ADD A PRODUCT (ADMIN) (REPEATED NAME)
-POST http://localhost:3101/products
+### Login with cookies
+POST {{host}}/api/auth/login
 Content-Type: application/json
-x-auth: 23423
 
 {
-    "name": "Librero",
-    "description": "Estanteria para guardar libros",
-    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711162707/MueblesVilla/Productos/Almacenamiento/njajp1gtyv3d33dh04rt.webp",
-    "unit": "unidad",
-    "stock": 10,
-    "pricePerUnit": 249.99,
-    "category": "Almacenamiento"
+    "email": "jorge1234@gmail.com",
+    "password": "jorge1234"
 }
 
-### ADD A PRODUCT (MISSING X-TOKEN)
-POST http://localhost:3101/products
+### Login with cookies
+POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-    "name": "Silla",
-    "description": "Silla para escritorio",
-    "imageUrl": "https://static.grainger.com/rp/s/is/image/Grainger/13E941_AS01?$glgmain$",
-    "unit": "unidad",
-    "stock": 5,
-    "pricePerUnit": 299.99,
-    "category": "Sillas"
+    "email": "feliza@gmail.com",
+    "password": "hola"
 }
 
-### ADD A PRODUCT (X-TOKEN NOT ADMIN)
-POST http://localhost:3101/products
+### Logout
+GET {{host}}/api/auth/logout
+
+### Ver los productos sin stock
+GET {{host}}/api/products
+
+### Productos por id
+GET {{host}}/api/products/6630247554b46e1e465185a8
+
+### Agregar productos al carrito
+POST {{host}}/api/cart/add
 Content-Type: application/json
-x-auth: 12345
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZlbGl6YUBnbWFpbC5jb20iLCJfaWQiOiI2NjNjMzMyODZkYjZhOGFjZDg4MzBkNjEiLCJpYXQiOjE3MTUyMjE0MDYsImV4cCI6MTcxNTIzOTQwNn0.HaUsOHjYZ8D7R2H7Exq8pq6Tmh5A2pLoLq3JTdtdLQk
 
 {
-    "name": "Silla",
-    "description": "Silla para escritorio",
-    "imageUrl": "https://static.grainger.com/rp/s/is/image/Grainger/13E941_AS01?$glgmain$",
-    "unit": "unidad",
-    "stock": 5,
-    "pricePerUnit": 299.99,
-    "category": "Sillas"
+    "productId": "663a4de37e782f19825a291f",
+    "quantity": 1
 }
 
-### ----------PUT PRODUCTS------------
+### Ver tu carrito ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+GET {{host}}/api/cart/
 
-### UPDATE PRODUCT OK (ADMIN)
-PUT http://localhost:3101/products/su03lDNr3BtkEAQjFAM1c
+### Ver tu carrito ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+DELETE  {{host}}/api/cart/
+
+
+### Ver tu usuario ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+GET {{host}}/api/users/
+
+
+### Editar la cantidad de un producto
+PUT {{host}}/api/cart/add
 Content-Type: application/json
-x-auth: 23423
 
 {
-    "name": "Mesa de noche",
-    "description": "Mesa para el dormitorio",
-    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711163076/MueblesVilla/Productos/Mesas/wqrx8cjlmt8o3pwuwxzx.webp",
-    "unit": "unidad",
-    "stock": 15,
-    "pricePerUnit": 299.99,
-    "category": "Mesas"
+    "productId": "6636e6ebab8e8b11f6980875",
+    "quantity": 1
 }
 
-### UPDATE PRODUCT (MISSING PROPERTIES)
-PUT http://localhost:3101/products/abcd
-Content-Type: application/json
-x-auth: 23423
-
-{
-    "name": "Sofa entero",
-    "description": "Sofa para la sala de estar"
-}
-
-### UPDATE PRODUCT (ADMIN) (REPEATED NAME)
-PUT http://localhost:3101/products/su03lDNr3BtkEAQjFAM1c
-Content-Type: application/json
-x-auth: 23423
-
-{
-    "name": "Mesa de noche",
-    "description": "Mesa para el dormitorio",
-    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711163076/MueblesVilla/Productos/Mesas/wqrx8cjlmt8o3pwuwxzx.webp",
-    "unit": "unidad",
-    "stock": 15,
-    "pricePerUnit": 299.99,
-    "category": "Mesas"
-}
-
-### UPDATE PRODUCT (MISSING X-TOKEN)
-PUT http://localhost:3101/products/abcd
-Content-Type: application/json
-
-{
-    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711052886/MueblesVilla/Productos/Mesas/w0psoscmq0rhajg3xjnm.png",
-    "name": "Mesa de comedor",
-    "description": "Mesa de comedor rectangular de madera maciza.",
-    "unit": "unidad",
-    "category": "Mesas",
-    "pricePerUnit": 700
-  }
-
-### UPDATE PRODUCT (X-TOKEN NOT ADMIN)
-PUT http://localhost:3101/products/abcd
-Content-Type: application/json
-x-auth: 12345
-
-{
-    "imageUrl": "https://res.cloudinary.com/dqoz5czqh/image/upload/v1711052886/MueblesVilla/Productos/Mesas/w0psoscmq0rhajg3xjnm.png",
-    "name": "Mesa de comedor",
-    "description": "Mesa de comedor rectangular de madera maciza.",
-    "unit": "unidad",
-    "category": "Mesas",
-    "pricePerUnit": 700
-  }
-
-### ----------DELETE PRODUCTS------------
-
-### DELETE PRODUCT OK (ADMIN)
-DELETE http://localhost:3101/products/abch
-x-auth: 23423
-
-### DELETE PRODUCT (MISSING X-TOKEN)
-DELETE http://localhost:3101/products/abcd
-
-### DELETE PRODUCT (X-TOKEN NOT ADMIN)
-DELETE http://localhost:3101/products/abcd
-x-auth: 12345
-
-### ----------POST CART------------
-
-### ADD TO CART (VALID)
-POST http://localhost:3101/cart
-Content-Type: application/json
-
-[
-    {
-        "productId": "662443265b17af101802dfbf",
-        "quantity": 3
-    }
-]
-
-### ADD TO CART (MISSING X-USER)
-POST http://localhost:3101/cart
-Content-Type: application/json
-x-auth: 12345
-
-[
-    {
-        "productId": "abcf",
-        "quantity": 3
-    },
-    {
-        "productId": "abcg",
-        "quantity": 2
-    }
-]
-
-### ADD TO CART (EXISTENT USER)
-POST http://localhost:3101/cart
-Content-Type: application/json
-x-auth: 12345
-x-user: Ricardo
-
-[
-    {
-        "productId": "abcd",
-        "quantity": 1
-    },
-    {
-        "productId": "abce",
-        "quantity": 1
-    }
-]
-
-### ADD TO CART (INVALID AMOUNT)
-POST http://localhost:3101/cart
-Content-Type: application/json
-x-auth: 12345
-x-user: Sergio
-
-[
-    {
-        "productId": "abcd",
-        "quantity": 0
-    },
-    {
-        "productId": "abce",
-        "quantity": -1
-    }
-]
-
-### ADD TO CART (INSUFFICIENT STOCK)
-POST http://localhost:3101/cart
-Content-Type: application/json
-x-auth: 12345
-x-user: Sergio
-
-[
-    {
-        "productId": "abcd",
-        "quantity": 2
-    },
-    {
-        "productId": "abce",
-        "quantity": 4
-    }
-]
-
-### ----------GET CART------------
-
-### GET CART (VALID)
-GET http://localhost:3101/cart
-x-auth: 12345
-x-user: Ricardo
-
-### GET CART WITH INSUFFICIENT STOCK
-### MODIFY STOCK OF PRODUCT
-PUT http://localhost:3101/products/abcd
-Content-Type: application/json
-x-auth: 23423
-
-{
-    "stock": 1
-}
-
-### GET CART
-GET http://localhost:3101/cart
-x-auth: 12345
-x-user: Ricardo
-
-### GET CART WITH 0 STOCK
-### MODIFY STOCK OF PRODUCT
-PUT http://localhost:3101/products/abcd
-Content-Type: application/json
-x-auth: 23423
-
-{
-    "stock": 0
-}
-
-### GET CART
-GET http://localhost:3101/cart
-x-auth: 12345
-x-user: Chenko
-
-### GET CART (MISSING X-USER)
-GET http://localhost:3101/cart
-x-auth: 12345
+### Borrar producto del carrito
+DELETE {{host}}/api/cart/6635808b71a99e8ccdd43af0

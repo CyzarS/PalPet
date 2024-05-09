@@ -81,6 +81,7 @@ function validateToken(req, res, next) {
     })
 }
 
+
 // Middleware para validar el token en las cookies
 function validateTokenWithCookies(req, res, next) {
     let token = req.cookies.access_token;
@@ -98,6 +99,7 @@ function validateTokenWithCookies(req, res, next) {
 
         req.email= decoded.email;
         req._id= decoded._id;
+        req.isAdmin = decoded.isAdmin;
         next()
     })
 }

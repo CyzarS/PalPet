@@ -1,0 +1,41 @@
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px; /* Adjust the font size as needed */
+    color: #e87f29;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    width: 100%;
+    height: 100%; /* Change to 100% */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex; /* New: Set display to flex */
+    flex-direction: column; /* New: Align content in a column */
+}
+
+.card img {
+    width: 100%;
+    height: auto; /* Change to auto */
+    object-fit: contain; 
+}
+
+.card-content {
+    flex-grow: 1; /* New: Allow content to grow and fill remaining space */
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

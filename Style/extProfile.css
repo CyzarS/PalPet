@@ -1,0 +1,44 @@
+.profile-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Add some bottom margin to create space */
+}
+
+.profile-info {
+    margin-bottom: 10px; /* Add some bottom margin to create space between items */
+}
+
+.profile-info img {
+    width: 10000px; /* Adjust the width of the profile image */
+    height: 800px; /* Adjust the height of the profile image */
+    border-radius: 50%; /* Make the profile image round */
+}
+
+.profile-form {
+    width: 60%; /* Set the width of the form */
+}
+
+.profile-form label {
+    display: block; /* Make labels display block to ensure proper spacing */
+    margin-bottom: 5px; /* Add bottom margin to labels */
+}
+
+.profile-form input {
+    width: calc(100% - 10px); /* Adjust the width of the input fields */
+    padding: 5px; /* Add padding to input fields */
+    margin-bottom: 10px; /* Add bottom margin to input fields */
+}
+
+.profile-form button {
+    padding: 10px 20px; /* Add padding to the button */
+    background-color: #e87f29;; /* Set the background color of the button */
+    color: #fff; /* Set the text color of the button */
+    border: none; /* Remove border */
+    cursor: pointer; /* Add pointer cursor to the button */
+    border-radius: 10px;
+}
+
+.profile-form button:hover {
+    background-color: #904d16;; /* Change background color on hover */
+}

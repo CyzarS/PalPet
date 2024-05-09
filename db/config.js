@@ -5,6 +5,6 @@ module.exports = {
     password : process.env.DB_PASSWORD,
     dbName : process.env.DB_NAME,
     getUrl: function () {
-        return `mongodb+srv://${this.user}:${this.password}@mvilladb.v4b6vtv.mongodb.net/${this.dbName}?retryWrites=true&w=majority&appName=MvillaDB`
+        return `mongodb+srv://${this.user}:${this.password}@myapp.oc3l6pw.mongodb.net/${this.dbName}?retryWrites=true&w=majority&appName=MyApp`
     }
 }

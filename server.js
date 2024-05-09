@@ -21,6 +21,11 @@ app.set('view engine', 'hbs');
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/Images', express.static(path.join(__dirname, 'Images')));
+app.use('/Controllers', express.static(path.join(__dirname, 'Controllers')));
+app.use('/Style', express.static(path.join(__dirname, 'Style')));
+
+
 app.get('/js/register.js', (req, res) => {
   const filePath = path.join(__dirname, 'js', 'register.js');
   const stream = fs.createReadStream(filePath);
@@ -35,10 +40,20 @@ app.get('/js/login.js', (req, res) => {
   stream.pipe(res);
 });
 
+
 app.get('/js/sweetalert2.all.min.js', (req, res) => {
   res.setHeader('Content-Type', 'application/javascript');
   res.sendFile(path.join(__dirname, 'js', 'sweetalert2.all.min.js'));
 });
+
+app.get('/home.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'home.html'));
+}); 
+
+app.get('/palpet.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'palpet.html'));
+});
+
 
 // Ruta para servir login.html
 app.get('/login.html', (req, res) => {
@@ -54,7 +69,7 @@ app.get('/signup.html', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.send('Integrated Assignment 3. e-commerce app');
+  res.send('PalPet');
 });
 
 app.use('/api/products', productRoutes);
@@ -69,3 +84,6 @@ app.use('/api/auth', authRoutes);
 app.listen(port, () => {
   console.log(`Servidor en ejecución en el puerto ${port}`);
 });
+
+
+//const accessToken = localStorage.getItem('access_token');

@@ -5,11 +5,12 @@ loginForm.addEventListener('submit', async (event) => {
 
     const loginEmail = document.getElementById('loginEmail').value;
     const loginPassword = document.getElementById('loginPassword').value;
-    const rememberMe = document.getElementById('rememberMe').checked;
+    const rememberMeCheckbox = document.getElementById('rememberMeCheckbox').checked; // Obtener el estado del checkbox "Remember Me"
 
     const userData = {
         email: loginEmail,
-        password: loginPassword
+        password: loginPassword,
+        rememberMe: rememberMeCheckbox // Pasar el estado del checkbox al servidor
     };
 
     try {
@@ -30,12 +31,10 @@ loginForm.addEventListener('submit', async (event) => {
                 icon: 'success'
             });
 
-            // Guardar el token en el almacenamiento local si "Remember me" está marcado
-            if (rememberMe) {
-                localStorage.setItem('access_token', data.token);
-            }
-            
-            // Aquí puedes redirigir al usuario a otra página después del inicio de sesión exitoso
+            localStorage.setItem('access_token', data.token);
+
+            // Redireccionar a la página deseada
+            window.location.href = 'palpet.html';
         } else {
             Swal.fire({
                 title: 'Error',

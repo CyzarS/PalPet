@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
   
     let token = jwt.sign({ email: user.email, _id: user._id },
       process.env.TOKEN_KEY,
-      { expiresIn: '1h' });
+      { expiresIn: '5h' }); 
   
     res.cookie('access_token', token, {
       httpOnly: true,
@@ -21,7 +21,8 @@ router.post('/login', async (req, res) => {
       maxAge: 3600000 // 1 hora en milisegundos
     });
   
-    res.json({ message: 'Logged in successfully' });
+    /*res.json({ message: 'Logged in successfully'});*/
+    res.json({ token });
   });
 
 router.get('/logout', auth.validateTokenWithCookies, (req, res)=>{

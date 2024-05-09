@@ -11,17 +11,7 @@ router.get('/', authMiddleware.validateHeader, authMiddleware.validateAdmin, asy
     // Filtrar por atributos
     const { query } = req;
     Object.keys(query).forEach((key) => {
-      if (key === 'min' || key === 'max') {
-        // Filtrar por rango de precios
-        let value = parseFloat(query[key]);
-        if (!isNaN(value)) {
-          filteredProducts = filteredProducts.filter((product) => {
-            if (key === 'min') return product.pricePerUnit >= value;
-            if (key === 'max') return product.pricePerUnit <= value;
-            return true;
-          });
-        }
-      } else if (key !== 'stock') {
+      if (key !== 'stock') {
         // Filtrar por otros atributos (excepto stock)
         let value = query[key].toLowerCase();
         filteredProducts = filteredProducts.filter((product) =>
@@ -67,7 +57,7 @@ router.get('/:id', authMiddleware.validateHeader, authMiddleware.validateAdmin, 
   }
 });
 
-router.post('/', authMiddleware.validateHeader, authMiddleware.requiredAdmin, async (req, res) => {
+router.post('/', authMiddleware.validateToken, async (req, res) => {
   try {
     let newProductData = req.body;
 

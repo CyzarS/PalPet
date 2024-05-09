@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PalPet</title>
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/f98e4d4157.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../Style/extStyle.css">
+        <link rel="stylesheet" href="../Style/extExplore.css">
+    </head>
+    <body>
+        <header>
+            <div class='dashboard text-center'>
+                <div class="dashboard-nav">
+                    <img src="../Images/Logo.png" alt="Company Logo" style="width:120px;" class="brand-logo"> 
+                <nav class="dashboard-nav-list">
+                    <a href="#" id="home" class="dashboard-nav-item active"><i class="fas fa-home"></i> Home</a>
+                    <a href="#" id="explore" class="dashboard-nav-item"><i class="fa-solid fa-magnifying-glass"></i> Explore</a>
+                </div>
+                <div class='dashboard-app'>
+                    <header class='dashboard-toolbar'>
+                        <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+                        <div style="float: right; width: 100%;">
+                            <button class="btn btn-primary my-2 my-sm-0 custom-login-btn" type="button" onclick="window.location.href='login.html'" style="float: right; padding-right: 10px;">
+                                <i class="fa-solid fa-user"></i> Login
+                              </button>
+                        </div>
+                      </header>
+                    
+                    <div class='dashboard-content'>
+                    </div>
+                    
+                </div>
+            </div>
+        </header>
+        
+            
+        <main></main>
+        <footer></footer>
+    </body>
+           <!-- Bootstrap JavaScript Libraries -->
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+           <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+           <script src="../Controllers/sidebarHome.js"></script>
+           <script>
+               loadJSFile('../Controllers/home.js');
+               const mobileScreen = window.matchMedia("(max-width: 990px )");
+               $(document).ready(function () {
+                   $(".dashboard-nav-dropdown-toggle").click(function () {
+                       $(this).closest(".dashboard-nav-dropdown")
+                           .toggleClass("show")
+                           .find(".dashboard-nav-dropdown")
+                           .removeClass("show");
+                       $(this).parent()
+                           .siblings()
+                           .removeClass("show");
+                   });
+                   $(".menu-toggle").click(function () {
+                       if (mobileScreen.matches) {
+                           $(".dashboard-nav").toggleClass("mobile-show");
+                       } else {
+                           $(".dashboard").toggleClass("dashboard-compact");
+                       }
+                   });
+               });
+               // Selecciona todos los elementos de la barra de navegación
+               var navItems = document.querySelectorAll('.dashboard-nav-item');
+               // Agrega un evento de clic a cada elemento
+               navItems.forEach(function(item) {
+   
+                   item.addEventListener('click', function(e) {
+                       // Evita el comportamiento predeterminado del enlace
+                       e.preventDefault();
+   
+                       // Elimina la clase 'active' de todos los elementos
+                       navItems.forEach(function(item) {
+                           item.classList.remove('active');
+                       });
+   
+                       // Agrega la clase 'active' al elemento que se ha hecho clic
+                       this.classList.add('active');
+                   });
+               });
+           </script>
+</html>

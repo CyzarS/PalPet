@@ -45,6 +45,7 @@ signupForm.addEventListener('submit', async (event) => {
                 icon: 'success'
             });
             // Aquí puedes redirigir al usuario a otra página o realizar alguna otra acción después del registro exitoso
+            window.location.href = 'login.html';
         } else {
             Swal.fire({
                 title: 'Error',
